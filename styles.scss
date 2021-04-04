@@ -7,13 +7,153 @@ $dark-gray: hsl(0, 0%, 19%);
   padding: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
-  color: $dark-gray;
+  color: $white;
 }
 
 body {
   height: 100vh;
-  background: url(assets/desktop/bg-image-daytime.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(assets/desktop/bg-image-daytime.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
+
+  .main-container.show {
+    margin-top: -23rem;
+
+    .more-btn {
+      svg {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  main {
+    position: relative;
+    width: 100%;
+    padding: 3rem 11rem 11rem;
+    transition: all 0.4s ease-in-out;
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      .quotes {
+        width: 100%;
+        display: flex;
+
+        p {
+          width: 500px;
+          line-height: 1.5rem;
+          word-wrap: break-word;
+          opacity: 0.7;
+        }
+
+        svg {
+          cursor: pointer;
+          margin: 0.5rem 1.5rem 0 0;
+        }
+      }
+
+      span {
+        margin-top: 1rem;
+        font-weight: 700;
+      }
+    }
+
+    section {
+      position: relative;
+      margin-top: 12rem;
+
+      .weather-container {
+        display: flex;
+
+        p {
+          margin-left: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          opacity: 0.7;
+        }
+      }
+
+      .time-container {
+        display: flex;
+
+        .time {
+          font-size: 10rem;
+          font-weight: 700;
+        }
+
+        span {
+          display: inherit;
+          align-items: flex-end;
+          padding-bottom: 2rem;
+          font-size: 2rem;
+          font-weight: 300;
+          opacity: 0.7;
+        }
+      }
+
+      .location {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+      }
+
+      .more-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: gray;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 5px 5px 1.2rem;
+        width: 8rem;
+        border-radius: 2rem;
+        outline: none;
+        border: none;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 3px;
+        cursor: pointer;
+
+        svg {
+          transform: rotate(180deg);
+          transition: all 0.6s ease-in-out;
+        }
+      }
+    }
+  }
+
+  aside {
+    position: relative;
+    background: lightgray;
+    width: 100%;
+    margin-top: -6.8rem;
+    padding: 4rem 10rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px 70px;
+    // opacity: 0.95;
+
+    section {
+      span {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(black, 0.4);
+        font-weight: 700;
+      }
+
+      p {
+        margin-top: 10px;
+        font-size: 4rem;
+        color: $dark-gray;
+      }
+    }
+  }
 }
