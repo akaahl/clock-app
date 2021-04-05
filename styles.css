@@ -7,13 +7,37 @@
   color: white;
 }
 
-body {
-  height: 100vh;
+body[data-theme='day'] {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.4)), to(rgba(0, 0, 0, 0.4))), url(assets/desktop/bg-image-daytime.jpg);
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(assets/desktop/bg-image-daytime.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center center;
+}
+
+body[data-theme='day'] .night-mode {
+  display: none;
+}
+
+body[data-theme='day'] .day-mode {
+  display: block;
+}
+
+body[data-theme='night'] {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.4)), to(rgba(0, 0, 0, 0.4))), url(assets/desktop/bg-image-nighttime.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(assets/desktop/bg-image-nighttime.jpg);
+}
+
+body[data-theme='night'] .night-mode {
+  display: block;
+}
+
+body[data-theme='night'] .day-mode {
+  display: none;
+}
+
+body {
+  height: 100vh;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
   overflow: hidden;
 }
 
@@ -23,8 +47,8 @@ body .main-container.show {
 }
 
 body .main-container.show .more-btn svg {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 body .side-info.show {
@@ -76,6 +100,8 @@ body main header .quotes img {
   width: 20px;
   cursor: pointer;
   margin: 0.5rem 1.5rem;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
 }
 
 body main header span {
@@ -114,6 +140,7 @@ body main section .time-container .time {
 
 body main section .time-container span {
   display: inherit;
+  margin-left: 1.5rem;
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -156,8 +183,8 @@ body main section .more-btn {
 }
 
 body main section .more-btn svg {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }

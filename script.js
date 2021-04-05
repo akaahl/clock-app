@@ -8,13 +8,12 @@ const refreshQuoteBtn = document.getElementById('refresh-quote-btn');
 const userTime = document.getElementById('user-time');
 const userLocation = document.getElementById('user-location');
 const userGreetings = document.getElementById('user-greetings');
-
-const backgroundimages = {
-  day: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(assets/desktop/bg-image-daytime.jpg);`,
-  night: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(assets/desktop/bg-image-nighttime.jpg);`,
-};
-
-console.log(body);
+const timeZoneAbbreviation = document.getElementById('timezone-abbreviation');
+const regionSection = document.getElementById('region-section');
+const weekdaySection = document.getElementById('weekday-section');
+const yearDaySection = document.getElementById('yearday-section');
+const weekNumberSection = document.getElementById('weeknumber-section');
+let degreeRotation = 0; // For refreshQuoteBtn
 
 seeMoreBtn.addEventListener('click', () => {
   mainContainer.classList.toggle('show');
@@ -23,8 +22,8 @@ seeMoreBtn.addEventListener('click', () => {
 
 refreshQuoteBtn.addEventListener('click', () => {
   getQuotes(quoteUrl);
-  refreshQuoteBtn.style.transform = `rotate(360deg)`;
-  refreshQuoteBtn.style.transition = `transform 0.5s linear`;
+  degreeRotation += 360;
+  refreshQuoteBtn.style.transform = `rotate(${degreeRotation}deg)`;
 });
 
 // Get random quotes
@@ -48,26 +47,67 @@ const timeApi = 'http://worldtimeapi.org/api/ip';
 async function getUserTime(url) {
   const res = await fetch(url);
   const data = await res.json();
-  const currentTime = data.datetime.slice(11, 16);
-  const morningGreetings = `Good morning, it's currently`;
-  const nightGreetings = `Good night, it's currently`;
 
-  userTime.innerText = currentTime;
+  const timeAbbreviation = data.abbreviation;
+  timeZoneAbbreviation.innerText = timeAbbreviation;
 
-  if (+currentTime.slice(0, 2) >= 18) {
-    userGreetings.innerText = nightGreetings;
-    body.style.background = backgroundimages.night;
-  } else {
-    userGreetings.innerText = morningGreetings;
-    body.style.background = backgroundimages.day;
+  const region = data.timezone;
+  const dayOfWeek = data.day_of_week;
+  const dayOfYear = data.day_of_year;
+  const weekNumber = data.week_number;
+
+  regionSection.innerText = region;
+  weekdaySection.innerText = dayOfWeek;
+  yearDaySection.innerText = dayOfYear;
+  weekNumberSection.innerText = weekNumber;
+}
+
+getUserTime(timeApi);
+// function updateDOM() {}
+
+// Get user geo-location
+const geoApi = 'https://freegeoip.app/json/';
+
+async function getUserLocation(url) {
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const regionName = data.region_name;
+  const countryCode = data.country_code;
+
+  userLocation.innerText = `In ${regionName}, ${countryCode}`;
+}
+
+getUserLocation(geoApi);
+
+function setTimeAndMode() {
+  const hours = new Date().getHours();
+  const minutes = new Date().getMinutes();
+
+  const greetings = {
+    morning: `Good morning, it's currently`,
+    afternoon: `Good afternoon, it's currently`,
+    night: `Good evening, it's currently`,
+  };
+
+  userTime.innerText = `${hours < 10 ? '0' : hours}:${
+    minutes < 10 ? '0' + minutes : minutes
+  }`;
+
+  if (hours < 12) {
+    userGreetings.innerText = greetings.morning;
+    body.setAttribute('data-theme', 'day');
+  }
+
+  if (hours >= 12 && hours < 18) {
+    userGreetings.innerText = greetings.afternoon;
+    body.setAttribute('data-theme', 'day');
+  }
+
+  if (hours >= 18) {
+    userGreetings.innerText = greetings.night;
+    body.setAttribute('data-theme', 'night');
   }
 }
 
-setInterval(() => {
-  getUserTime(timeApi);
-}, 1000);
-
-getUserTime(timeApi);
-function updateDOM() {}
-
-body.style.background = backgroundimages.night;
+setInterval(setTimeAndMode, 1000);

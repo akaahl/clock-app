@@ -10,13 +10,44 @@ $dark-gray: hsl(0, 0%, 19%);
   color: $white;
 }
 
-body {
-  height: 100vh;
+body[data-theme='day'] {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(assets/desktop/bg-image-daytime.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center center;
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  // background-position: center center;
+
+  .night-mode {
+    display: none;
+  }
+
+  .day-mode {
+    display: block;
+  }
+}
+
+body[data-theme='night'] {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(assets/desktop/bg-image-nighttime.jpg);
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  // background-position: center center;
+
+  .night-mode {
+    display: block;
+  }
+
+  .day-mode {
+    display: none;
+  }
+}
+
+body {
+  height: 100vh;
+  // background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
   overflow: hidden;
 
   .main-container.show {
@@ -24,7 +55,7 @@ body {
 
     .more-btn {
       svg {
-        transform: rotate(0deg);
+        transform: rotate(180deg);
       }
     }
   }
@@ -62,11 +93,11 @@ body {
           width: 20px;
           cursor: pointer;
           margin: 0.5rem 1.5rem;
+          transition: all 0.3s linear;
         }
 
-        // svg:active {
+        // img.rotate {
         //   transform: rotate(360deg);
-        //   transition: transform 0.3s linear;
         // }
       }
 
@@ -101,6 +132,7 @@ body {
 
         span {
           display: inherit;
+          margin-left: 1.5rem;
           align-items: flex-end;
           padding-bottom: 2rem;
           font-size: 2rem;
@@ -135,7 +167,7 @@ body {
         cursor: pointer;
 
         svg {
-          transform: rotate(180deg);
+          transform: rotate(0deg);
           transition: all 0.3s ease-in-out;
         }
 
