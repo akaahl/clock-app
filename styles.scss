@@ -13,9 +13,6 @@ $dark-gray: hsl(0, 0%, 19%);
 body[data-theme='day'] {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(assets/desktop/bg-image-daytime.jpg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
-  // background-position: center center;
 
   .night-mode {
     display: none;
@@ -23,15 +20,24 @@ body[data-theme='day'] {
 
   .day-mode {
     display: block;
+  }
+
+  aside {
+    background: lightgray;
+
+    span {
+      color: rgba(black, 0.4);
+    }
+
+    p {
+      color: $dark-gray;
+    }
   }
 }
 
 body[data-theme='night'] {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(assets/desktop/bg-image-nighttime.jpg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
-  // background-position: center center;
 
   .night-mode {
     display: block;
@@ -40,11 +46,22 @@ body[data-theme='night'] {
   .day-mode {
     display: none;
   }
+
+  aside {
+    background: $black;
+
+    span {
+      color: $white;
+    }
+
+    p {
+      color: $white;
+    }
+  }
 }
 
 body {
   height: 100vh;
-  // background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   background-position: center center !important;
@@ -95,10 +112,6 @@ body {
           margin: 0.5rem 1.5rem;
           transition: all 0.3s linear;
         }
-
-        // img.rotate {
-        //   transform: rotate(360deg);
-        // }
       }
 
       span {
@@ -113,6 +126,11 @@ body {
 
       .weather-container {
         display: flex;
+
+        img {
+          height: 20px;
+          width: 20px;
+        }
 
         p {
           margin-left: 1rem;
@@ -180,28 +198,96 @@ body {
 
   aside {
     position: relative;
-    background: lightgray;
     width: 100%;
     padding: 4rem 10rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px 70px;
-    opacity: 0.9;
+    opacity: 0.9 !important;
     transition: all 0.4s ease-in-out;
 
     section {
       span {
         letter-spacing: 3px;
         text-transform: uppercase;
-        color: rgba(black, 0.4);
-        font-weight: 700;
       }
 
       p {
         margin-top: 10px;
         font-size: 4rem;
-        color: $dark-gray;
+        font-weight: 700;
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    main {
+      padding: 3rem 4rem;
+
+      section {
+        display: flex;
+        flex-direction: column;
+        margin-top: 8rem;
+
+        .time-container {
+          .time {
+            font-size: 8rem;
+          }
+        }
+        .more-btn {
+          position: relative;
+          margin-top: 2rem;
+        }
+      }
+    }
+
+    aside {
+      padding: 4rem;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  body {
+    main {
+      padding: 2rem;
+
+      section {
+        .weather-container {
+          p {
+            font-size: 14px;
+          }
+        }
+        .time-container {
+          .time {
+            font-size: 6rem;
+          }
+        }
+      }
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+
+      span {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 2rem !important;
+      }
+    }
+  }
+
+  .main-container.show {
+    transform: translateY(-26rem) !important;
+  }
+
+  .side-info.show {
+    transform: translateY(-26rem) !important;
   }
 }
