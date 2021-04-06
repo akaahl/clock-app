@@ -4,6 +4,8 @@
 
 ## The challenge
 
+Demo can be found [here](https://clock-app-iota.vercel.app/)
+
 The challenge is to build out this clock application and get it looking as close to the design as possible using following APIs to retrieve the necessary data:
 
 - [World Time API](http://worldtimeapi.org/) to set the time based on the visitor's IP adress. This API will also be used for additional data, like the day of the year shown in the expanded state.
