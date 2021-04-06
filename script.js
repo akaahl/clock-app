@@ -14,7 +14,7 @@ const weekdaySection = document.getElementById('weekday-section');
 const yearDaySection = document.getElementById('yearday-section');
 const weekNumberSection = document.getElementById('weeknumber-section');
 const quoteApi = 'https://api.quotable.io/random/',
-  timeApi = 'http://worldtimeapi.org/api/ip',
+  timeApi = 'https://worldtimeapi.org/api/ip',
   geoApi = 'https://freegeoip.app/json/';
 let degreeRotation = 0; // For refreshQuoteBtn
 
