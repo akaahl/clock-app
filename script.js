@@ -13,6 +13,9 @@ const regionSection = document.getElementById('region-section');
 const weekdaySection = document.getElementById('weekday-section');
 const yearDaySection = document.getElementById('yearday-section');
 const weekNumberSection = document.getElementById('weeknumber-section');
+const quoteApi = 'https://api.quotable.io/random/',
+  timeApi = 'http://worldtimeapi.org/api/ip',
+  geoApi = 'https://freegeoip.app/json/';
 let degreeRotation = 0; // For refreshQuoteBtn
 
 seeMoreBtn.addEventListener('click', () => {
@@ -21,64 +24,48 @@ seeMoreBtn.addEventListener('click', () => {
 });
 
 refreshQuoteBtn.addEventListener('click', () => {
-  getQuotes(quoteUrl);
+  getDataFromApis(quoteApi, timeApi, geoApi);
   degreeRotation += 360;
   refreshQuoteBtn.style.transform = `rotate(${degreeRotation}deg)`;
 });
 
-// Get random quotes
-const quoteUrl = 'https://api.quotable.io/random/';
+// Get data from multiple APIs
+async function getDataFromApis(apiOne, apiTwo, apiThree) {
+  // Get random quotes
+  const responseOne = await fetch(apiOne);
+  const dataOne = await responseOne.json();
 
-async function getQuotes(url) {
-  const res = await fetch(url);
-  const data = await res.json();
+  quoteText.innerText = dataOne.content;
+  quoteAuthor.innerText = dataOne.author;
 
-  //   console.log(data.content, data.author);
+  // Get user timezone informations
+  const responseTwo = await fetch(apiTwo);
+  const dataTwo = await responseTwo.json();
 
-  quoteText.innerText = data.content;
-  quoteAuthor.innerText = data.author;
-}
-
-getQuotes(quoteUrl);
-
-// Get user time based on api
-const timeApi = 'http://worldtimeapi.org/api/ip';
-
-async function getUserTime(url) {
-  const res = await fetch(url);
-  const data = await res.json();
-
-  const timeAbbreviation = data.abbreviation;
+  const timeAbbreviation = dataTwo.abbreviation;
   timeZoneAbbreviation.innerText = timeAbbreviation;
 
-  const region = data.timezone;
-  const dayOfWeek = data.day_of_week;
-  const dayOfYear = data.day_of_year;
-  const weekNumber = data.week_number;
+  const region = dataTwo.timezone;
+  const dayOfWeek = dataTwo.day_of_week;
+  const dayOfYear = dataTwo.day_of_year;
+  const weekNumber = dataTwo.week_number;
 
   regionSection.innerText = region;
   weekdaySection.innerText = dayOfWeek;
   yearDaySection.innerText = dayOfYear;
   weekNumberSection.innerText = weekNumber;
-}
 
-getUserTime(timeApi);
-// function updateDOM() {}
+  // Get user geo-location info
+  const responseThree = await fetch(apiThree);
+  const dataThree = await responseThree.json();
 
-// Get user geo-location
-const geoApi = 'https://freegeoip.app/json/';
-
-async function getUserLocation(url) {
-  const res = await fetch(url);
-  const data = await res.json();
-
-  const regionName = data.region_name;
-  const countryCode = data.country_code;
+  const regionName = dataThree.region_name;
+  const countryCode = dataThree.country_code;
 
   userLocation.innerText = `In ${regionName}, ${countryCode}`;
 }
 
-getUserLocation(geoApi);
+getDataFromApis(quoteApi, timeApi, geoApi);
 
 function setTimeAndMode() {
   const hours = new Date().getHours();
